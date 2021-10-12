@@ -1,12 +1,10 @@
 import React from "react";
-import {TaskType} from "./App";
 
-/*
-type TasksType = {
-    t
+type TaskType = {
+    id: number
+    title: string
+    isDone: boolean
 }
-*/
-
 
 type PropsType = {
     title: string
