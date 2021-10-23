@@ -10,16 +10,15 @@ export type FilterValueType = 'all' | 'active' | 'completed'
 
 function App() {
 
-
-    const [filter, setFilter] = React.useState<FilterValueType>("all")
-
-    let [tasks, setTasks] = useState<Array<TasksType>>([
+    const [tasks, setTasks] = useState<Array<TasksType>>([
         {id: 1, title: "HTML", isDone: true},
         {id: 2, title: "CSS", isDone: true},
         {id: 3, title: "Redux", isDone: false},
         {id: 4, title: "React", isDone: false}
     ])
 
+    const [filter, setFilter] = React.useState<FilterValueType>("all")
+    
     //BLL
     /*    let tasks = [
             {id: 1, title: "HTML", isDone: true},
