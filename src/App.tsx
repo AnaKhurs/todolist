@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {TasksType, Todolist} from "./Todolist";
+import {v1} from "uuid";
 
 export type FilterValueType = 'all' | 'active' | 'completed'
 
@@ -11,23 +12,15 @@ export type FilterValueType = 'all' | 'active' | 'completed'
 function App() {
 
     const [tasks, setTasks] = useState<Array<TasksType>>([
-        {id: 1, title: "HTML", isDone: true},
-        {id: 2, title: "CSS", isDone: true},
-        {id: 3, title: "Redux", isDone: false},
-        {id: 4, title: "React", isDone: false}
+        {id: v1(), title: "HTML", isDone: true},
+        {id: v1(), title: "CSS", isDone: true},
+        {id: v1(), title: "Redux", isDone: false},
+        {id: v1(), title: "React", isDone: false}
     ])
 
     const [filter, setFilter] = React.useState<FilterValueType>("all")
-    
-    //BLL
-    /*    let tasks = [
-            {id: 1, title: "HTML", isDone: true},
-            {id: 2, title: "CSS", isDone: true},
-            {id: 3, title: "Redux", isDone: false},
-            {id: 4, title: "React", isDone: false}
-        ]*/
 
-    const removeTask = (taskID: number) => {
+    const removeTask = (taskID: string) => {
         setTasks(tasks.filter(t => t.id !== taskID))
         //return undefined
     }
@@ -36,13 +29,11 @@ function App() {
         setFilter(filter)
     }
 
-    /* const tasks2 = [
-         {id: 1, title: "Lalala", isDone: true},
-         {id: 2, title: "Hi", isDone: false},
-         {id: 3, title: "Yoyo", isDone: false},
-     ]*/
+    const addTask = (title: string) => {
+        const newTask: TasksType = {id: v1(), title: title, isDone: false}
+        setTasks([newTask, ...tasks])
+    }
 
-    //UI
 
     let taskForRender: Array<TasksType> = tasks
 
@@ -61,6 +52,7 @@ function App() {
                 tasks={taskForRender}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                addTask={addTask}
             />
             {/* <Todolist title="Songs" tasks={tasks2}/>*/}
         </div>
