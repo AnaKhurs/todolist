@@ -34,16 +34,32 @@ function App() {
         setTasks([newTask, ...tasks])
     }
 
-
     let taskForRender: Array<TasksType> = tasks
 
     if (filter === 'active') {
         taskForRender = tasks.filter(t => t.isDone === false)
     }
-
     if (filter === 'completed') {
         taskForRender = tasks.filter(t => t.isDone === true)
     }
+
+    const changeStatus = (taskId: string, isDone: boolean) => {
+        let task = tasks.find(t => t.id === taskId)
+        if (task) {
+            task.isDone = isDone
+        }
+        setTasks([...tasks])
+    }
+
+/*    const changeTaskStatus = (taskId: string) => { //вариант через map вместо find
+        const updatedTask = tasks.map(t => {
+            if (t.id === taskId) {
+                return {...t, isDone: !t.isDone} //!t.isDone если не придется тестировать иначе вводим новый параметр функции isDone
+            }
+            return t
+        })
+        setTasks(updatedTask)
+    }*/
 
     return (
         <div className="App">
@@ -53,6 +69,8 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                filter={filter}
+                changeStatus={changeStatus}
             />
             {/* <Todolist title="Songs" tasks={tasks2}/>*/}
         </div>
