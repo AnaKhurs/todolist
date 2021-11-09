@@ -3,13 +3,15 @@ import {FilterValueType} from "./App";
 import {v1} from "uuid";
 
 type PropsType = {
+    id: string
     title: string
     tasks: Array<TasksType>
-    removeTask: (taskID: string) => void
-    changeFilter: (filter: FilterValueType) => void
-    addTask: (title: string) => void
+    removeTask: (taskID: string, todoListID: string) => void
+    changeFilter: (filter: FilterValueType, todoListID: string) => void
+    addTask: (title: string, todoListID: string) => void
     filter: FilterValueType
-    changeStatus: (taskId: string, isDone: boolean) => void
+    changeStatus: (taskId: string, isDone: boolean, todoListID: string) => void
+    removeTodoList: (todoListID: string) => void
 }
 
 export type TasksType = {
@@ -30,9 +32,9 @@ export function Todolist(props: PropsType) {
     const [error, setError] = useState<boolean>(false) //флаг
 
     const tasksJSXElements = props.tasks.map(t => {
-        const removeTask = () => props.removeTask(t.id)
+        const removeTask = () => props.removeTask(t.id, props.id)
         const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
-            props.changeStatus(t.id, e.currentTarget.checked)
+            props.changeStatus(t.id, e.currentTarget.checked, props.id)
         }
         return ( //"isDone XX" имена классов через пробел если нужно несколько
             <li className={t.isDone ? "isDone" : ""} key={t.id}>
@@ -46,20 +48,20 @@ export function Todolist(props: PropsType) {
     const addTask = () => {
         const trimTitle = title.trim() //метод trim отрезает пробелы в начале и в конце
         if (trimTitle) { // если не пустая строка и не пробел
-            props.addTask(trimTitle.trim()) //title&&props.addTask(title), trim отрезает пробелы в начале и в конце
+            props.addTask(trimTitle.trim(), props.id) //title&&props.addTask(title), trim отрезает пробелы в начале и в конце
         } else {
             setError(true)
         }
         setTitle('')
     }
-    const setAll = () => props.changeFilter("all")
-    const setActive = () => props.changeFilter("active")
-    const setCompleted = () => props.changeFilter("completed")
+    const setAll = () => props.changeFilter("all", props.id)
+    const setActive = () => props.changeFilter("active", props.id)
+    const setCompleted = () => props.changeFilter("completed", props.id)
     const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
         setError(false)
     }
-    
+
     const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             addTask()
@@ -75,7 +77,10 @@ export function Todolist(props: PropsType) {
 
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>
+                {props.title}
+                <button onClick={()=>props.removeTodoList(props.id)}>x</button>
+            </h3>
             <div>
                 <input
                     className={error ? "error" : ""}
