@@ -2,6 +2,7 @@ import React, {ChangeEvent, Dispatch, SetStateAction, KeyboardEvent, useState} f
 import {FilterValueType} from "./App";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/AddItemForm";
+import {EditableSpan} from "./components/EditableSpan";
 
 type PropsType = {
     id: string
@@ -13,6 +14,8 @@ type PropsType = {
     filter: FilterValueType
     changeStatus: (taskId: string, isDone: boolean, todoListID: string) => void
     removeTodoList: (todoListID: string) => void
+    changeTaskTitle: (taskId: string, title: string, todoListID: string) => void
+    changeTodolistTitle: (title: string, todoListID: string)=>void
 }
 
 export type TasksType = {
@@ -30,13 +33,16 @@ export function Todolist(props: PropsType) {
 
     const tasksJSXElements = props.tasks.map(t => {
         const removeTask = () => props.removeTask(t.id, props.id)
+        const changeTitle = (title: string) => {
+            props.changeTaskTitle(t.id, title, props.id)
+        }
         const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
             props.changeStatus(t.id, e.currentTarget.checked, props.id)
         }
         return ( //"isDone XX" имена классов через пробел если нужно несколько
             <li className={t.isDone ? "isDone" : ""} key={t.id}>
                 <input onChange={onChangeStatus} type="checkbox" checked={t.isDone}/>
-                <span>{t.title}</span>
+                <EditableSpan title={t.title} setNewTitle={changeTitle}/>
                 <button onClick={removeTask}>x</button>
             </li>
         )
@@ -55,10 +61,14 @@ export function Todolist(props: PropsType) {
     const activeBtnClass = props.filter === "active" ? 'active-filter' : "";
     const completedBtnClass = props.filter === "completed" ? 'active-filter' : "";
 
+    const changeTodolistTitle = (title: string) => {
+        props.changeTodolistTitle(title,props.id)
+    }
+
     return (
         <div>
             <h3>
-                {props.title}
+                <EditableSpan title={props.title} setNewTitle={changeTodolistTitle}/>
                 <button onClick={() => props.removeTodoList(props.id)}>x</button>
             </h3>
             <AddItemForm addItem={addTask}/>
