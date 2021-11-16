@@ -19,6 +19,12 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
         setTitle(e.currentTarget.value)
     }
 
+    const onKeyPressAddItem = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            offEditMode()
+        }
+    }
+
     return (
         editMode
             ? <input
@@ -26,6 +32,7 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
                 autoFocus={true}
                 onBlur={offEditMode}
                 onChange={changeTitle}
+                onKeyPress={onKeyPressAddItem}
             />
             : <span onDoubleClick={onEditMode}> {props.title}
                 <button onClick={onEditMode}>edit</button>

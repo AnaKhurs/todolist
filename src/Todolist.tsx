@@ -1,6 +1,5 @@
 import React, {ChangeEvent, Dispatch, SetStateAction, KeyboardEvent, useState} from "react";
 import {FilterValueType} from "./App";
-import {v1} from "uuid";
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
 
@@ -23,11 +22,6 @@ export type TasksType = {
     title: string
     isDone: boolean
 }
-
-// function addTask(){
-//     let task = {id: v1(), title: "New Task", isDone: false},
-//         let NewTasks = [task, ...tasks]
-// }
 
 export function Todolist(props: PropsType) {
 
