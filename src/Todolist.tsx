@@ -1,6 +1,7 @@
 import React, {ChangeEvent, Dispatch, SetStateAction, KeyboardEvent, useState} from "react";
 import {FilterValueType} from "./App";
 import {v1} from "uuid";
+import {AddItemForm} from "./components/AddItemForm";
 
 type PropsType = {
     id: string
@@ -27,10 +28,6 @@ export type TasksType = {
 
 export function Todolist(props: PropsType) {
 
-    const [title, setTitle] = useState<string>("")
-
-    const [error, setError] = useState<boolean>(false) //флаг
-
     const tasksJSXElements = props.tasks.map(t => {
         const removeTask = () => props.removeTask(t.id, props.id)
         const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,54 +42,26 @@ export function Todolist(props: PropsType) {
         )
     })
 
-    const addTask = () => {
-        const trimTitle = title.trim() //метод trim отрезает пробелы в начале и в конце
-        if (trimTitle) { // если не пустая строка и не пробел
-            props.addTask(trimTitle.trim(), props.id) //title&&props.addTask(title), trim отрезает пробелы в начале и в конце
-        } else {
-            setError(true)
-        }
-        setTitle('')
+    const addTask = (title: string) => {
+        props.addTask(title, props.id)
     }
+
     const setAll = () => props.changeFilter("all", props.id)
     const setActive = () => props.changeFilter("active", props.id)
     const setCompleted = () => props.changeFilter("completed", props.id)
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-        setError(false)
-    }
 
-    const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            addTask()
-        }
-    }
 
     const allBtnClass = props.filter === "all" ? 'active-filter' : "";
     const activeBtnClass = props.filter === "active" ? 'active-filter' : "";
     const completedBtnClass = props.filter === "completed" ? 'active-filter' : "";
-    const errorMessage = error //условный рендеринг
-        ? <div style={{color: "red", fontWeight: "bold"}}>Title is required!</div>
-        : null
 
     return (
         <div>
             <h3>
                 {props.title}
-                <button onClick={()=>props.removeTodoList(props.id)}>x</button>
+                <button onClick={() => props.removeTodoList(props.id)}>x</button>
             </h3>
-            <div>
-                <input
-                    className={error ? "error" : ""}
-                    placeholder="Enter your task..."
-                    value={title}
-                    onChange={changeTitle}
-                    onKeyPress={onKeyPressAddTask}
-                />
-                <button onClick={addTask}>+</button>
-                {errorMessage}
-                {/* <div className={error ? "error-message" : ''}>{error ? "Title is required!" : ""}</div>*/}
-            </div>
+            <AddItemForm addItem={addTask}/>
             <ul>
                 {tasksJSXElements}
             </ul>
