@@ -1,4 +1,4 @@
-.App {
+/*.App {
   padding: 30px;
   display: flex;
   height: 100%
@@ -6,12 +6,12 @@
 
 .App > div {
   margin-right: 50px;
-}
+}*/
 
 .isDone {
   opacity: 0.5;
 }
-
+/*
 .active-filter {
   background-color: cadetblue;
 }
@@ -25,4 +25,4 @@
   color: red;
   font-weight: 900;
   text-align: center;
-}
+}*/
