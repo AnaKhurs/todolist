@@ -14,7 +14,7 @@ export type TodoListType = {
     filter: FilterValueType
 }
 
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: Array<TasksType>
 }
 
@@ -49,7 +49,6 @@ function App() {
     )
 
     const removeTask = (taskID: string, todoListID: string) => {
-
         setTasks({
             ...tasks,
             [todoListID]: tasks[todoListID].filter(t => t.id !== taskID)
@@ -75,7 +74,6 @@ function App() {
     }
 
     const changeTaskStatus = (taskId: string, isDone: boolean, todoListID: string) => {
-
         setTasks({
             ...tasks,
             [todoListID]: tasks[todoListID].map(t => t.id === taskId ? {...t, isDone} : t)
