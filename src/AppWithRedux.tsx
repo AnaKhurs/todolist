@@ -74,7 +74,6 @@ export function AppWithRedux() {
         dispatch(action)
     }
 
-
     const todoListsComponents = todoLists.map(tl => {
 
         let taskForRender: Array<TasksType> = tasks[tl.id]
