@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Dispatch, SetStateAction, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, Dispatch, SetStateAction, KeyboardEvent, useState, useCallback} from "react";
 import {FilterValueType} from "./App";
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
@@ -55,9 +55,9 @@ export function Todolist(props: PropsType) {
         )
     })
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
-    }
+    },[props.addTask, props.id])
 
     const setAll = () => props.changeFilter("all", props.id)
     const setActive = () => props.changeFilter("active", props.id)
