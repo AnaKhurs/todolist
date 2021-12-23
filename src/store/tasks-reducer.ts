@@ -1,5 +1,5 @@
 import {FilterValueType, TasksStateType} from "../App";
-import {TasksType} from "../Todolist";
+import {TaskType} from "../Todolist";
 import {v1} from "uuid";
 import {AddTodolistAT, RemoveTodolistAT} from "./todolists-reducer";
 
@@ -46,7 +46,7 @@ export const tasksReducer =
                     [action.todoListID]: tasks[action.todoListID].filter(t => t.id !== action.taskID)
                 })
             case "ADD-TASK":
-                const newTask: TasksType = {id: v1(), title: action.title, isDone: false}
+                const newTask: TaskType = {id: v1(), title: action.title, isDone: false}
                 return ({
                     ...tasks,
                     [action.todoListID]: [newTask, ...tasks[action.todoListID]]

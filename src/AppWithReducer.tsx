@@ -1,6 +1,6 @@
 import React, {useReducer, useState} from 'react';
 import './App.css';
-import {TasksType, Todolist} from "./Todolist";
+import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./components/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
@@ -23,7 +23,7 @@ export type TodoListType = {
 }
 
 export type TasksStateType = {
-    [key: string]: Array<TasksType>
+    [key: string]: Array<TaskType>
 }
 
 //C-R-UD
@@ -97,7 +97,7 @@ export function AppWithReducer() {
 
     const todoListsComponents = todoLists.map(tl => {
 
-        let taskForRender: Array<TasksType> = tasks[tl.id]
+        let taskForRender: Array<TaskType> = tasks[tl.id]
 
         if (tl.filter === 'active') {
             taskForRender = tasks[tl.id].filter(t => !t.isDone)
