@@ -27,29 +27,47 @@ export type TaskType = {
 }
 
 export const Todolist = React.memo((props: PropsType) => {
-    console.log("Todolist")
+    /*console.log("Todolist")*/
 
     const changeStatus = useCallback((taskId: string, isDone: boolean) => {
+        /* console.log("changeStatus")*/
         props.changeStatus(taskId, isDone, props.id)
     }, [props.changeStatus, props.id])
 
     const removeTask = useCallback((taskID: string) => {
+        /* console.log("removeTask")*/
         props.removeTask(taskID, props.id)
     }, [props.removeTask, props.id])
 
     const changeTaskTitle = useCallback((taskId: string, title: string) => {
+        /*console.log("changeTaskTitle")*/
         props.changeTaskTitle(taskId, title, props.id)
     }, [props.changeTaskTitle, props.id])
 
-    let taskForRender = props.tasks
-    if (props.filter === 'active') {
-        taskForRender = props.tasks.filter(t => !t.isDone)
-    }
-    if (props.filter === 'completed') {
-        taskForRender = props.tasks.filter(t => t.isDone)
-    }
+    /*
+        let taskForRender = props.tasks
+        if (props.filter === 'active') {
+            taskForRender = props.tasks.filter(t => !t.isDone)
+        }
+        if (props.filter === 'completed') {
+            taskForRender = props.tasks.filter(t => t.isDone)
+        }
+    */
 
-    const tasksJSXElements = taskForRender.map(t => {
+    let taskForRender = props.tasks
+    let taskForRenderMemo = useMemo(() => {
+
+        if (props.filter === 'active') {
+            taskForRender = props.tasks.filter(t => !t.isDone)
+        }
+        if (props.filter === 'completed') {
+            taskForRender = props.tasks.filter(t => t.isDone)
+        }
+        return taskForRender
+    }, [props.filter, props.tasks])
+
+
+    const tasksJSXElements = taskForRenderMemo.map(t => {
             return <Task key={t.id}
                          task={t}
                          changeStatus={changeStatus}
@@ -67,9 +85,13 @@ export const Todolist = React.memo((props: PropsType) => {
     const setCompleted = useCallback(() => props.changeFilter("completed", props.id), [props.id])
 
 
-    const changeTodolistTitle = (title: string) => {
+    const changeTodolistTitle = useCallback((title: string) => {
         props.changeTodolistTitle(title, props.id)
-    }
+    }, [props.changeTodolistTitle, props.id])
+
+    const removeTodoList = useCallback(() => {
+        props.removeTodoList(props.id)
+    }, [props.removeTodoList, props.id])
 
     return (
         <div>
@@ -81,7 +103,7 @@ export const Todolist = React.memo((props: PropsType) => {
                 position: "relative"
             }}>
                 <EditableSpan title={props.title} setNewTitle={changeTodolistTitle}/>
-                <IconButton onClick={() => props.removeTodoList(props.id)} style={{width: "10px"}}>
+                <IconButton onClick={removeTodoList} style={{width: "10px"}}>
                     <Delete/>
                 </IconButton>
             </Typography>

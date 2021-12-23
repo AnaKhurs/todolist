@@ -12,11 +12,11 @@ type TaskPropsType = {
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
-
+    console.log("Task")
     const removeTask = () => props.removeTask(props.task.id)
-    const changeTitle = (title: string) => {
+    const changeTitle = useCallback((title: string) => {
         props.changeTaskTitle(props.task.id, title)
-    }
+    }, [props.changeTaskTitle, props.task.id])
     const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         props.changeStatus(props.task.id, e.currentTarget.checked)
     }
