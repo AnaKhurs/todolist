@@ -52,5 +52,4 @@ test("get banknote list", ()=> {
     expect(result23[0]).toBe(20)
     expect(result23[1]).toBe(2)
     expect(result23[2]).toBe(1)
-
 })
