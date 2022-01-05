@@ -19,7 +19,6 @@ export type TasksStateType = {
 }
 
 //C-R-UD
-
 //CLI -> GUI -> UI
 
 function App() {
