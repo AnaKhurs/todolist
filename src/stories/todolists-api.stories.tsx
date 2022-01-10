@@ -46,7 +46,7 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     const [todolistId, setTodolistId] = useState('')
-    
+
     const onClickHandler = () => {
         todolistAPI.deleteTodolist(todolistId)
             .then((res) => {
