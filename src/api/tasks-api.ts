@@ -10,7 +10,7 @@ const instance = axios.create({
 type Created = ResponseType<{ item: TaskType }>
 export const tasksAPI = {
     getTasks(todolistId:string) {
-        return instance.get<Array<TaskType>>(`todo-lists/${todolistId}/tasks`)
+        return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId:string, title: string) {
         return instance.post<Created, AxiosResponse<Created>, { title: string }>(`/todo-lists/${todolistId}/tasks`, {title})
@@ -21,9 +21,6 @@ export const tasksAPI = {
     },
     updateTaskTitle(todolistId: string, id:string, title: string) {
         return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${id}`, {title})
-    },
-    updateTaskStatus(todolistId: string, id:string, isDone: boolean) {
-        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${id}`, {isDone})
     }
 }
 
@@ -40,9 +37,24 @@ type TaskType = {
     addedDate: string
 }
 
+type GetTasksResponse = {
+    error: null | string
+    totalCount: number
+    items: TaskType[]
+}
+
 type ResponseType<T = {}> = {
     fieldsErrors: string[]
     messages: string[]
     resultCode: number
     data: T
+}
+
+type UpdateTaskType = {
+    title: string
+    description: null | string
+    status: number
+    priority: number
+    startDate: null | string
+    deadline: null | string
 }
