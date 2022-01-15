@@ -58,9 +58,7 @@ function App() {
 
 
     const changeTaskTitle = useCallback(function (id: string, newTitle: string, todolistId: string) {
-        /*     const action = changeTaskTitleAC(id, newTitle, todolistId);
-             dispatch(action);*/
-        dispatch(changeTaskTitleTC(id, newTitle, todolistId))
+        dispatch(changeTaskTitleTC(id, todolistId, newTitle))
     }, []);
 
     const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {

@@ -202,6 +202,7 @@ export const updateTaskStatusTC = (taskId: string, todolistId: string, status: T
 export const changeTaskTitleTC = (taskId: string, todolistId: string, title: string) => {
     return (dispatch: Dispatch, getState: () => AppRootStateType) => {
         const allTasksFromState = getState().tasks;
+        debugger
         const tasksForCurrentTodolist = allTasksFromState[todolistId]
         const task = tasksForCurrentTodolist.find(t => {
             return t.id === taskId
