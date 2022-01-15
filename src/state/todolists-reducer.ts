@@ -128,3 +128,12 @@ export const removeTodolistTC = (todolistId: string) => {
             })
     }
 }
+
+export const changeTodolistTitleTC = (todolistId: string, title: string) => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.updateTodolist(todolistId, title)
+            .then((res) => {
+                dispatch(changeTodolistTitleAC(todolistId, title))
+            })
+    }
+}
