@@ -52,7 +52,6 @@ export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestSt
     entityStatus
 } as const)
 
-
 // thunks
 export const fetchTodolistsTC = () => {
     return (dispatch: Dispatch<ActionsType>) => {
@@ -101,7 +100,6 @@ export const addTodolistTC = (title: string) => {
             })
     }
 }
-
 
 export const changeTodolistTitleTC = (id: string, title: string) => {
     return (dispatch: Dispatch<ActionsType>) => {
