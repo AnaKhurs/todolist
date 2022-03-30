@@ -65,7 +65,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
 
                 dispatch(setIsLoggedInAC({value: false}))
                 dispatch(setAppStatusAC({status: 'succeeded'}))
-                dispatch(clearTodosDataAC({}))
+                dispatch(clearTodosDataAC())
 
             } else {
                 handleServerAppError(res.data, dispatch);
