@@ -41,13 +41,12 @@ export const authAPI = {
         return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId: number }>>>("auth/login", data);
     },
     me() {
-        return instance.get<ResponseType<{data: ResponseMeTypes}>>('auth/me')
+        return instance.get<ResponseType<{ data: ResponseMeTypes }>>('auth/me')
     },
     logout() {
         return instance.delete<ResponseType>("auth/login");
     },
 }
-
 
 // types
 export type ResponseMeTypes = {
@@ -70,10 +69,12 @@ export type TodolistType = {
     order: number
 }
 
+export type FieldErrorType = { field: string; error: string }
+
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
-    fieldsErrors: Array<string>
+    fieldsErrors?: Array<FieldErrorType>
     data: D
 }
 
