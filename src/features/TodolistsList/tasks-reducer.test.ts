@@ -1,5 +1,5 @@
 import {
-    addTaskAC,
+    addTaskTC,
     fetchTasksTC,
     removeTaskTC,
     tasksReducer,
@@ -173,7 +173,7 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
 
-    const action = addTaskAC({
+    const task = {
         todoListId: "todolistId2",
         title: "juce",
         status: TaskStatuses.New,
@@ -184,7 +184,9 @@ test('correct task should be added to correct array', () => {
         priority: 0,
         startDate: "",
         id: "id exist"
-    });
+    }
+
+    const action = addTaskTC.fulfilled(task, 'requestId', {title: task.title, todolistId: task.id});
 
     const endState = tasksReducer(startState, action)
 
