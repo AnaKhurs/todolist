@@ -3,7 +3,7 @@ import {
     changeTodolistTitleAC,
     removeTodolistAC,
     todolistsReducer,
-    changeTodolistFilterAC, TodolistDomainType, FilterValuesType
+    changeTodolistFilterAC, TodolistDomainType, FilterValuesType, fetchTodolistsTC
 } from './todolists-reducer';
 
 let todolistId1: string = "todolistId1"
@@ -42,6 +42,14 @@ test('correct todolist should be added', () => {
 
     expect(endState.length).toBe(3);
     expect(endState[2].title).toBe(newTodolistTitle);
+});
+
+test('todolists should be added', () => {
+
+    const action = fetchTodolistsTC.fulfilled({todolists: startState}, "requestId")
+    const endState = todolistsReducer([], action)
+
+    expect(endState.length).toBe(2);
 });
 
 test('correct todolist should change its name', () => {
