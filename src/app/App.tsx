@@ -13,10 +13,12 @@ import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress';
 import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
-import {Login} from "../features/Login/Login";
+import {Login} from "../features/Auth/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import {logoutTC} from "../features/Login/auth-reducer";
+import {logoutTC} from "../features/Auth/auth-reducer";
+import {selectIsInitialized, selectStatus} from './selectors'
+import {authSelectors} from '../features/Auth'
 
 type PropsType = {
     demo?: boolean
@@ -25,9 +27,9 @@ type PropsType = {
 function App({demo = false}: PropsType) {
 
     const dispatch = useDispatch()
-    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const status = useSelector(selectStatus)
+    const isInitialized = useSelector(selectIsInitialized)
+    const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn)
 
 
     useEffect(() => {
